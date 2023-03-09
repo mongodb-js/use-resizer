@@ -22,17 +22,19 @@ export const useResizerStates = (ref: Ref, options: Options) => {
     (width = Infinity, height = Infinity) => {
       if (!ref.current) return;
 
-      // Set the box size.
-      if (axis === "both") {
+      if (axis === "horizontal") {
+        ref.current.style.width = width + "px";
+        _setSize({ height: initialSize.height, width });
+      } else if (axis === "vertical") {
+        ref.current.style.height = height + "px";
+        _setSize({ width: initialSize.width, height });
+      } else {
         ref.current.style.width = width + "px";
         ref.current.style.height = height + "px";
+        _setSize({ width, height });
       }
-      if (axis === "horizontal") ref.current.style.width = width + "px";
-      if (axis === "vertical") ref.current.style.height = height + "px";
-
-      _setSize({ width, height });
     },
-    [axis, ref]
+    [axis, initialSize.height, initialSize.width, ref]
   );
 
   const getDimensions = (event: MouseEvent) => ({
@@ -42,12 +44,13 @@ export const useResizerStates = (ref: Ref, options: Options) => {
 
   const updateSizeWhenWithinBounds = useCallback(
     (width: number, height: number) => {
+      const widthOOB = isWidthOutOfBounds(width, options);
+      const heightOOB = isHeightOutOfBounds(height, options);
+
       switch (true) {
-        case axis === "both" &&
-          (isWidthOutOfBounds(width, options) ||
-            isHeightOutOfBounds(height, options)):
-        case axis === "horizontal" && isWidthOutOfBounds(width, options):
-        case axis === "vertical" && isHeightOutOfBounds(height, options):
+        case axis === "both" && (widthOOB || heightOOB):
+        case axis === "horizontal" && widthOOB:
+        case axis === "vertical" && heightOOB:
           break;
         default:
           setSize(width, height);
