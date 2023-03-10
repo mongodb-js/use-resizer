@@ -21,7 +21,7 @@
       "require": "./dist/use-resizer.umd.js"
     }
   },
-  "version": "0.0.0",
+  "version": "0.0.1",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
