@@ -1,9 +1,17 @@
 {
   "name": "use-resizer",
+  "author": "Satya Sinha satya@mongodb.com",
   "type": "module",
   "files": [
     "dist"
   ],
+  "description": "React hook for resizing elements.",
+  "homepage": "https://github.com/mongodb-js/use-resizer",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:mongodb-js/use-resizer.git"
+  },
+  "license": "MIT",
   "main": "./dist/use-resizer.umd.js",
   "module": "./dist/use-resizer.es.js",
   "types": "./dist/index.d.ts",
@@ -13,7 +21,6 @@
       "require": "./dist/use-resizer.umd.js"
     }
   },
-  "private": true,
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
