@@ -6,9 +6,17 @@
   justify-content: center;
 }
 
-.fix-left-edge {
+.fixed-box {
   width: 500px;
   height: 500px;
+}
+
+.right-to-left {
+  direction: rtl;
+}
+
+.left-to-right {
+  direction: ltr;
 }
 
 .box {
@@ -18,7 +26,6 @@
   display: grid;
   grid-template-rows: 4px 1fr 4px;
   grid-template-columns: 4px 1fr 4px;
-  justify-content: space-between;
 }
 
 .size-info {

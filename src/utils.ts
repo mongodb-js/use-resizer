@@ -7,7 +7,7 @@ const DEFAULT_DIMENSIONS: Dimensions = {
 };
 
 export const useResizerStates = (ref: Ref, options: Options) => {
-  const { axis = "both" } = options;
+  const { direction = "east" } = options;
 
   const [coords, setCoords] = useState<Coordinates>({
     x: Infinity,
@@ -22,10 +22,10 @@ export const useResizerStates = (ref: Ref, options: Options) => {
     (width = Infinity, height = Infinity) => {
       if (!ref.current) return;
 
-      if (axis === "horizontal") {
+      if (direction === "east" || direction === "west") {
         ref.current.style.width = width + "px";
         _setSize({ height: initialSize.height, width });
-      } else if (axis === "vertical") {
+      } else if (direction === "north" || direction === "south") {
         ref.current.style.height = height + "px";
         _setSize({ width: initialSize.width, height });
       } else {
@@ -34,12 +34,24 @@ export const useResizerStates = (ref: Ref, options: Options) => {
         _setSize({ width, height });
       }
     },
-    [axis, initialSize.height, initialSize.width, ref]
+    [direction, initialSize.height, initialSize.width, ref]
   );
 
   const getDimensions = (event: MouseEvent) => ({
-    width: getSize(initialSize.width + event.clientX - coords.x, options),
-    height: getSize(initialSize.height + event.clientY - coords.y, options),
+    width: getSize(
+      initialSize.width +
+        (direction === "west"
+          ? coords.x - event.clientX
+          : event.clientX - coords.x),
+      options
+    ),
+    height: getSize(
+      initialSize.height +
+        (direction === "north"
+          ? coords.y - event.clientY
+          : event.clientY - coords.y),
+      options
+    ),
   });
 
   const updateSizeWhenWithinBounds = useCallback(
@@ -47,16 +59,25 @@ export const useResizerStates = (ref: Ref, options: Options) => {
       const widthOOB = isWidthOutOfBounds(width, options);
       const heightOOB = isHeightOutOfBounds(height, options);
 
+      const horizontalAxis =
+        direction === "east" ||
+        direction === "west" ||
+        direction === "south-east";
+      const verticalAxis =
+        direction === "north" ||
+        direction === "south" ||
+        direction === "south-east";
+
       switch (true) {
-        case axis === "both" && (widthOOB || heightOOB):
-        case axis === "horizontal" && widthOOB:
-        case axis === "vertical" && heightOOB:
+        case (horizontalAxis || verticalAxis) && (widthOOB || heightOOB):
+        case horizontalAxis && widthOOB:
+        case verticalAxis && heightOOB:
           break;
         default:
           setSize(width, height);
       }
     },
-    [axis, options, setSize]
+    [direction, options, setSize]
   );
 
   return {

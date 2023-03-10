@@ -3,17 +3,7 @@ import type { Options } from "../";
 import { useResizer } from "../";
 import "./box.css";
 
-type Direction =
-  | "west"
-  | "east"
-  | "east-west"
-  | "north"
-  | "south"
-  | "north-south"
-  | "south-east";
-type Props = Options & {
-  direction: Direction;
-};
+type Props = Options;
 
 export const Box = (props: Props) => {
   const resizeRef = useRef<HTMLDivElement>(null);
@@ -31,10 +21,10 @@ export const Box = (props: Props) => {
   const northWest = (
     <>
       {props.direction === "west" && (
-        <div className="resize-bar-west" onMouseDown={initResize} />
+        <div className="resize-bar-west cursor-ew" onMouseDown={initResize} />
       )}
       {props.direction === "north" && (
-        <div className="resize-bar-north" onMouseDown={initResize} />
+        <div className="resize-bar-north cursor-ns" onMouseDown={initResize} />
       )}
     </>
   );
@@ -61,9 +51,14 @@ export const Box = (props: Props) => {
     </>
   );
 
+  const isNorthWest = props.direction === "west" || props.direction === "north";
+
+  const fixedBoxClass = isNorthWest ? "fixed-box right-to-left" : "fixed-box";
+  const boxClass = isNorthWest ? "box left-to-right" : "box";
+
   const box = (
     <>
-      <div ref={resizeRef} className="box">
+      <div ref={resizeRef} className={boxClass}>
         {northWest}
         <div className="size-info">
           {displaySize && `${size.height}px x ${size.width}px`}
@@ -76,7 +71,7 @@ export const Box = (props: Props) => {
   return (
     <div className="container">
       <>
-        <div className="fix-left-edge">{box}</div>
+        <div className={fixedBoxClass}>{box}</div>
         {hasReset && (
           <button className="reset-button" onClick={resetSize}>
             Reset Box

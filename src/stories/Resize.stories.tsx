@@ -17,23 +17,39 @@ const dimensionArgs = {
 
 const EastDirectionResizeTemplate: ComponentStory<typeof Box> = (
   args: Partial<Options>
-) => <Box axis="horizontal" direction="east" {...args} />;
+) => <Box direction="east" {...args} />;
 export const EastDirectionResize = EastDirectionResizeTemplate.bind({});
 EastDirectionResize.args = {
   ...dimensionArgs,
 };
 
+const WestDirectionResizeTemplate: ComponentStory<typeof Box> = (
+  args: Partial<Options>
+) => <Box direction="west" {...args} />;
+export const WestDirectionResize = WestDirectionResizeTemplate.bind({});
+WestDirectionResize.args = {
+  ...dimensionArgs,
+};
+
 const SouthDirectionResizeTemplate: ComponentStory<typeof Box> = (
   args: Partial<Options>
-) => <Box axis="vertical" direction="south" {...args} />;
+) => <Box direction="south" {...args} />;
 export const SouthDirectionResize = SouthDirectionResizeTemplate.bind({});
 SouthDirectionResize.args = {
   ...dimensionArgs,
 };
 
+const NorthDirectionResizeTemplate: ComponentStory<typeof Box> = (
+  args: Partial<Options>
+) => <Box direction="north" {...args} />;
+export const NorthDirectionResize = NorthDirectionResizeTemplate.bind({});
+NorthDirectionResize.args = {
+  ...dimensionArgs,
+};
+
 const SouthEastDirectionResizeTemplate: ComponentStory<typeof Box> = (
   args: Partial<Options>
-) => <Box axis="both" direction="south-east" {...args} />;
+) => <Box direction="south-east" {...args} />;
 export const SouthEastDirectionResize = SouthEastDirectionResizeTemplate.bind(
   {}
 );
@@ -43,7 +59,7 @@ SouthEastDirectionResize.args = {
 
 const SouthEastDirectionResizeWithResetTemplate: ComponentStory<typeof Box> = (
   args: Partial<Options>
-) => <Box axis="both" direction="south-east" {...args} />;
+) => <Box direction="south-east" {...args} />;
 export const SouthEastDirectionResizeWithReset =
   SouthEastDirectionResizeWithResetTemplate.bind({});
 SouthEastDirectionResizeWithReset.args = {

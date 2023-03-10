@@ -1,10 +1,11 @@
 import type { RefObject } from "react";
 
 export type Ref = RefObject<HTMLDivElement>;
+type Direction = "west" | "east" | "north" | "south" | "south-east";
 
 export type Options = {
   step?: number;
-  axis: "horizontal" | "vertical" | "both";
+  direction: Direction;
   initialWidth?: number;
   initialHeight?: number;
   minWidth?: number;
